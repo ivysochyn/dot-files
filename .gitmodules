@@ -7,3 +7,9 @@
 [submodule "nvim/pack/color-scheme/start/peaksea"]
     path = nvim/pack/color-scheme/start/peaksea
     url = https://github.com/vim-scripts/peaksea.git
+[submodule "nvim/pack/nvim-lspconfig/start/nvim-lsp-installer"]
+    path = nvim/pack/nvim-lspconfig/start/nvim-lsp-installer
+    url = https://github.com/williamboman/nvim-lsp-installer.git
+[submodule "nvim/pack/nvim-lspconfig/start/nvim-lspconfig"]
+    path = nvim/pack/nvim-lspconfig/start/nvim-lspconfig
+    url = https://github.com/neovim/nvim-lspconfig.git
