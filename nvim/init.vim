@@ -25,6 +25,13 @@ set number
 " Macro to remove trailing whitespaces
 map <F4> :%s/\s\+$//e<Enter>
 
+" Colorscheme
+if (has("termguicolors"))
+ set termguicolors
+endif
+
+colorscheme peaksea
+
 " Plugin manager section
 call plug#begin()
 " Show trailing whitespaces

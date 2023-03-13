@@ -4,3 +4,6 @@
 [submodule "nvim/pack/vim-plug/start/plugin/autoload"]
     path = nvim/pack/vim-plug/start/plugin/autoload
     url = https://github.com/junegunn/vim-plug.git
+[submodule "nvim/pack/color-scheme/start/peaksea"]
+    path = nvim/pack/color-scheme/start/peaksea
+    url = https://github.com/vim-scripts/peaksea.git
