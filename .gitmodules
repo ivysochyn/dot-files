@@ -19,3 +19,6 @@
 [submodule "nvim/pack/grammarous/start/grammarous"]
     path = nvim/pack/grammarous/start/grammarous
     url = https://github.com/rhysd/vim-grammarous.git
+[submodule "nvim/pack/auto-pairs/start/auto-pairs"]
+    path = nvim/pack/auto-pairs/start/auto-pairs
+    url = https://github.com/jiangmiao/auto-pairs

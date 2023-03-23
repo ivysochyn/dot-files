@@ -1,3 +1,4 @@
+require "user.autopairs"
 require "user.config"
-require "user.grammarous"
 require "user.copilot"
+require "user.grammarous"
