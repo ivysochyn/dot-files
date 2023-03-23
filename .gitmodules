@@ -16,3 +16,6 @@
 [submodule "nvim/pack/trailing-whitespace/start/trailing-whitespace"]
     path = nvim/pack/trailing-whitespace/start/trailing-whitespace
     url = https://github.com/lukoshkin/trailing-whitespace.git
+[submodule "nvim/pack/grammarous/start/grammarous"]
+    path = nvim/pack/grammarous/start/grammarous
+    url = https://github.com/rhysd/vim-grammarous.git
