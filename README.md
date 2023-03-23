@@ -15,3 +15,4 @@ This will create symlinks to the dot files in the home directory.
 The following programs are supported:
 - [Neovim](https://neovim.io/)
 - [git](https://git-scm.com/)
+- [tmux](https://github.com/tmux/tmux/wiki)
