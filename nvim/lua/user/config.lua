@@ -26,6 +26,9 @@ end
 
 vim.cmd('colorscheme peaksea')
 
+-- Disable markdown folding
+vim.g.vim_markdown_folding_disabled = 1
+
 -- Open at the same line number it was closed at
 vim.api.nvim_create_autocmd("BufReadPost", {
     pattern = {"*"},

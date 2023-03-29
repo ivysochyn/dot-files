@@ -22,3 +22,6 @@
 [submodule "nvim/pack/auto-pairs/start/auto-pairs"]
     path = nvim/pack/auto-pairs/start/auto-pairs
     url = https://github.com/jiangmiao/auto-pairs
+[submodule "nvim/pack/color-scheme/start/vim-markdown"]
+    path = nvim/pack/color-scheme/start/vim-markdown
+    url = https://github.com/preservim/vim-markdown.git
