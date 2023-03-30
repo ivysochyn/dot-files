@@ -25,3 +25,6 @@
 [submodule "nvim/pack/color-scheme/start/vim-markdown"]
     path = nvim/pack/color-scheme/start/vim-markdown
     url = https://github.com/preservim/vim-markdown.git
+[submodule "nvim/pack/illuminate/start/vim-illuminate"]
+    path = nvim/pack/illuminate/start/vim-illuminate
+    url = https://github.com/RRethy/vim-illuminate.git
