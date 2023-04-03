@@ -38,3 +38,20 @@ vim.api.nvim_create_autocmd("BufReadPost", {
         end
     end
 })
+
+-- Lsp lines
+require("lsp_lines").setup()
+vim.diagnostic.config({
+  virtual_text = true,
+})
+
+-- Disable virtual lines on startup
+vim.diagnostic.config({ virtual_lines = false })
+
+-- Toggle lsp_lines with <leader>ll
+vim.keymap.set(
+  "",
+  "<Leader>ll",
+  require("lsp_lines").toggle,
+  { desc = "Toggle lsp_lines" }
+)
