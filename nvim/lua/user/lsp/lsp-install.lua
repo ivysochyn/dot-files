@@ -7,6 +7,7 @@ end
 -- List of servers to install
 local servers = {
     "jedi_language_server",
+    "pylsp",
     "bashls",
     "clangd",
     "cmake",
@@ -34,5 +35,17 @@ for _, server in pairs(servers) do
      capabilities = require("user.lsp.handlers").capabilities,
   }
 
+  -- if server == "pylsp" then disable pylint
+  if server == "pylsp" then
+    opts.settings = {
+      pylsp = {
+        plugins = {
+          pylint = {
+            enabled = false,
+          },
+        },
+      },
+    }
+  end
   lspconfig[server].setup(opts)
 end
