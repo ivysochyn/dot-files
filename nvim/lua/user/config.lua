@@ -16,6 +16,16 @@ vim.opt.undofile = true
 -- Enable line numbers
 vim.opt.number = true
 
+-- Toggle expandtab with <S-Tab> (change 4 spaces to tab and vice versa)
+local toggle_expandtab = function()
+  if vim.opt.expandtab:get() then
+    vim.opt.expandtab = false
+  else
+    vim.opt.expandtab = true
+  end
+end
+vim.keymap.set('n', '<S-Tab>', toggle_expandtab, {noremap = true})
+
 -- Display tabs as <---
 vim.opt.list = true
 vim.opt.listchars = "tab:<-"
