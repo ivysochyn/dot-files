@@ -1,11 +1,43 @@
 #
 # To prevent debug code from being accidentally committed, simply add a comment near your
-# debug code containing the keyword !nocommit and this script will abort the commit.
+# debug code containing the keyword NOCOMMIT and this script will abort the commit.
 #
+
 if git commit -v --dry-run | grep 'NOCOMMIT' >/dev/null 2>&1
 then
-  echo "Trying to commit non-committable code."
-  echo "Remove the 'NOCOMMIT' string and try again."
+  # We found a NOCOMMIT, so abort the commit and display a colorful error message.
+  echo -e "\n\033[1;31mERROR:\033[0m You have a \033[1;31mNOCOMMIT\033[0m in your commit message."
+  echo -e "       Please remove it before committing.\n"
+
+  MSG=$(git commit -v --dry-run | grep 'NOCOMMIT' | sed 's/^//')
+
+  # Remove color codes from the message and colorize the NOCOMMIT keyword.
+  MSG=$(echo -e "$MSG" | sed 's/\x1B\[[0-9;]*[JKmsu]//g' | sed 's/NOCOMMIT/\x1B[1;31m&\x1B[0m/g')
+
+  # Display file names and line numbers.
+  FILES=$(git commit -v --dry-run | grep '\--git a/[a-zA-Z0-9]' | sed 's/^.*--git a\///' | sed 's/ b\/.*$//' | uniq)
+  echo -e "\033[1;31mFiles containing NOCOMMIT:\033[0m\n"
+
+  count=1
+  while IFS= read -r file; do
+    echo -e "  $count. $file"
+    count=$((count+1))
+  done <<< "$FILES"
+
+  # Display the lines containing NOCOMMIT sequentially with line numbers.
+  echo -e "\n\033[1;31mLines containing NOCOMMIT:\033[0m\n"
+
+  count=1
+  while IFS= read -r line; do
+    line=$(echo -e "$line" | sed 's/^[+-]//' | sed 's/^ *//')
+    if ! echo -e "$line" | grep 'NOCOMMIT' >/dev/null 2>&1
+    then
+      continue
+    fi
+    echo -e "  $count. $line\n"
+    count=$((count+1))
+  done <<< "$MSG"
+
   exit 1
 else
   exit 0
