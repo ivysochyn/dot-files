@@ -16,6 +16,10 @@ vim.opt.undofile = true
 -- Enable line numbers
 vim.opt.number = true
 
+-- Display tabs as <---
+vim.opt.list = true
+vim.opt.listchars = "tab:<-"
+
 -- Macro to remove trailing whitespace mapped to <leader><F4>
 vim.keymap.set('n', '<leader><F4>', ':%s/\\s\\+$//e<CR>', {noremap = true})
 
