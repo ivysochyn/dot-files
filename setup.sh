@@ -16,7 +16,7 @@ ln -sf $(realpath ./git/.gitconfig) ~/.gitconfig
 ln -sf $(realpath ./tmux/.tmux.conf) ~/.tmux.conf
 
 # Add the git hooks
-if [ ! -d "/home/illia/gitconfig/hooks" ]; then
-    mkdir -p /home/illia/gitconfig/hooks
+if [ ! -d "~/gitconfig/hooks" ]; then
+    mkdir -p ~/gitconfig/hooks
 fi
-ln -sf $(realpath ./git/hooks/pre-commit) /home/illia/gitconfig/hooks/pre-commit
+ln -sf $(realpath ./git/hooks/pre-commit) ~/gitconfig/hooks/pre-commit
