@@ -33,6 +33,9 @@ vim.opt.listchars = "tab:<-"
 -- Macro to remove trailing whitespace mapped to <leader><F4>
 vim.keymap.set('n', '<leader><F4>', ':%s/\\s\\+$//e<CR>', {noremap = true})
 
+-- Map <leader>lf to format the file
+vim.keymap.set('n', '<leader>lf', ':Neoformat<CR>', {noremap = true})
+
 -- Colorscheme
 if vim.fn.has('termguicolors') == 1 then
   vim.opt.termguicolors = true
@@ -43,7 +46,7 @@ vim.cmd('colorscheme peaksea')
 -- Disable markdown folding
 vim.g.vim_markdown_folding_disabled = 1
 
--- Open at the same line number it was closed at
+-- Open at the same line number the file was closed at
 vim.api.nvim_create_autocmd("BufReadPost", {
     pattern = {"*"},
     callback = function()
