@@ -34,3 +34,6 @@
 [submodule "nvim/pack/neoformat/start/neoformat"]
 	path = nvim/pack/neoformat/start/neoformat
 	url = https://github.com/sbdchd/neoformat.git
+[submodule "nvim/pack/hfcc/start/hfcc.nvim"]
+	path = nvim/pack/hfcc/start/hfcc.nvim
+	url = https://github.com/ivysochyn/hfcc.nvim.git
