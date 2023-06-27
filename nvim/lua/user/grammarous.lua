@@ -12,6 +12,9 @@ vim.api.nvim_set_keymap('n', '<leader>gn', '<Plug>(grammarous-move-to-next-error
 -- Map grammarous previous error to <leader>gp
 vim.api.nvim_set_keymap('n', '<leader>gp', '<Plug>(grammarous-move-to-previous-error)', { noremap = true, silent = true })
 
+-- Map grammarous show error to <leader>gi
+vim.api.nvim_set_keymap('n', '<leader>gi', '<Plug>(grammarous-open-info-window)', { noremap = true, silent = true })
+
 -- Set grammarous to check only comments in all filetypes, but markdown and gitcommit
 vim.cmd [[
     let g:grammarous#default_comments_only_filetypes = {
