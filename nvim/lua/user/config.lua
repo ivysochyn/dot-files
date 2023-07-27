@@ -72,25 +72,3 @@ vim.keymap.set(
   require("lsp_lines").toggle,
   { desc = "Toggle lsp_lines" }
 )
-
-local hfcc = require("hfcc")
-
-hfcc.setup({
-  -- parameters that are added to the request body
-  query_params = {
-    max_new_tokens = 60,
-    temperature = 0.2,
-    top_p = 0.95,
-    stop_token = "<|endoftext|>",
-  },
-  -- set this if the model supports fill in the middle
-  fim = {
-    enabled = true,
-    prefix = "<fim-prefix>",
-    middle = "<fim-middle>",
-    suffix = "<fim-suffix>",
-  },
-  debounce_ms = 80,
-  accept_keymap = "<Tab>",
-  dismiss_keymap = "<S-Tab>",
-})
