@@ -72,3 +72,6 @@ vim.keymap.set(
   require("lsp_lines").toggle,
   { desc = "Toggle lsp_lines" }
 )
+
+-- Set signcolumn to auto
+vim.opt.signcolumn = "auto:1"
