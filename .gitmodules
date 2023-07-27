@@ -37,3 +37,6 @@
 [submodule "nvim/pack/hfcc/start/hfcc.nvim"]
 	path = nvim/pack/hfcc/start/hfcc.nvim
 	url = https://github.com/ivysochyn/hfcc.nvim.git
+[submodule "nvim/pack/packer/start/packer.nvim"]
+	path = nvim/pack/packer/start/packer.nvim
+	url = https://github.com/wbthomason/packer.nvim.git
