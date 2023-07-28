@@ -20,11 +20,12 @@ local lsp = require('lsp-zero').preset(
 
 lsp.ensure_installed({
     'bashls',
+    'cmake',
     'dockerls',
     'gopls',
     'html',
     'jedi_language_server',
-    'pylsp'
+    'pylsp',
 })
 
 -- Setup clangd
