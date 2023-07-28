@@ -89,3 +89,6 @@ vim.keymap.set('i', '<Up>', '<Nop>', {noremap = true})
 vim.keymap.set('i', '<Down>', '<Nop>', {noremap = true})
 vim.keymap.set('i', '<Left>', '<Nop>', {noremap = true})
 vim.keymap.set('i', '<Right>', '<Nop>', {noremap = true})
+
+-- Set relative line numbers
+vim.opt.relativenumber = true
