@@ -75,3 +75,17 @@ vim.keymap.set(
 
 -- Set signcolumn to auto
 vim.opt.signcolumn = "auto:1"
+
+-- Unmap arrow keys
+vim.keymap.set('n', '<Up>', '<Nop>', {noremap = true})
+vim.keymap.set('n', '<Down>', '<Nop>', {noremap = true})
+vim.keymap.set('n', '<Left>', '<Nop>', {noremap = true})
+vim.keymap.set('n', '<Right>', '<Nop>', {noremap = true})
+vim.keymap.set('v', '<Up>', '<Nop>', {noremap = true})
+vim.keymap.set('v', '<Down>', '<Nop>', {noremap = true})
+vim.keymap.set('v', '<Left>', '<Nop>', {noremap = true})
+vim.keymap.set('v', '<Right>', '<Nop>', {noremap = true})
+vim.keymap.set('i', '<Up>', '<Nop>', {noremap = true})
+vim.keymap.set('i', '<Down>', '<Nop>', {noremap = true})
+vim.keymap.set('i', '<Left>', '<Nop>', {noremap = true})
+vim.keymap.set('i', '<Right>', '<Nop>', {noremap = true})
