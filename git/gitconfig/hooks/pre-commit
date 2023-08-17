@@ -1,38 +1,134 @@
-#
+#!/usr/bin/env bash
 # To prevent debug code from being accidentally committed, simply add a comment near your
 # debug code containing the keyword NOCOMMIT and this script will abort the commit.
-#
 
-if git commit -v --dry-run | grep 'NOCOMMIT' >/dev/null 2>&1
-then
-  # We found a NOCOMMIT, so abort the commit and display a colorful error message.
-  echo -e "\n\033[1;31mERROR:\033[0m You have a \033[1;31mNOCOMMIT\033[0m in your commit message."
-  echo -e "       Please remove it before committing.\n"
+function check_empty_commit() {
+    # If there are no files staged, exit without doing anything
+    # This prevents the pre-commit hook from running on an empty commit.
 
-  MSG=$(git commit -v --dry-run | grep 'NOCOMMIT' | sed 's/^//')
-
-  # Remove color codes from the message and colorize the NOCOMMIT keyword.
-  MSG=$(echo -e "$MSG" | sed 's/\x1B\[[0-9;]*[JKmsu]//g' | sed 's/NOCOMMIT/\x1B[1;31m&\x1B[0m/g')
-
-  # Display file names and line numbers.
-  FILES=$(git commit -v --dry-run | grep '\--git a/[a-zA-Z0-9]' | sed 's/^.*--git a\///' | sed 's/ b\/.*$//' | uniq)
-  echo -e "\033[1;31mFiles and lines containing NOCOMMIT:\033[0m\n"
-
-  count=1
-  while IFS= read -r file; do
-    # Grep for NOCOMMIT in the file
-    if ! grep 'NOCOMMIT' "$file" >/dev/null 2>&1
+    if git rev-parse --verify HEAD >/dev/null 2>&1
     then
-      continue
+      against=HEAD
+    else
+      # Initial commit: diff against an empty tree object
+      against=$(git hash-object -t tree /dev/null)
     fi
-    # Display the file name and line numbers containing NOCOMMIT
-    echo -e "  $count. \033[1;33m$file\033[0m"
-    grep -n 'NOCOMMIT' "$file" | sed 's/^\([0-9]*\):/\1: /' | sed 's/  */ /g' | sed 's/^/        /' | sed 's/NOCOMMIT/\x1B[1;31m&\x1B[0m/g'
-    count=$((count+1))
 
-  done <<< "$FILES"
+    if git diff-index --cached --quiet --diff-filter=ACMRTUXB "$against" --
+    then
+      exit 0
+    fi
+    return 0
+}
 
-  exit 1
-else
-  exit 0
-fi
+function check_forbidden_words() {
+    # Check whether commited files contain 'NOCOMMIT' keyword
+    # If so, abort the commit and display a colorful error message.
+
+    if git commit -v --dry-run | grep 'NOCOMMIT' >/dev/null 2>&1
+    then
+      # We found a NOCOMMIT, so abort the commit and display a colorful error message.
+      echo -e "\n\033[1;31mERROR:\033[0m You have a \033[1;31mNOCOMMIT\033[0m in your commit message."
+      echo -e "       Please remove it before committing.\n"
+
+      MSG=$(git commit -v --dry-run | grep 'NOCOMMIT' | sed 's/^//')
+
+      # Remove color codes from the message and colorize the NOCOMMIT keyword.
+      MSG=$(echo -e "$MSG" | sed 's/\x1B\[[0-9;]*[JKmsu]//g' | sed 's/NOCOMMIT/\x1B[1;31m&\x1B[0m/g')
+
+      # Display file names and line numbers.
+      FILES=$(git commit -v --dry-run | grep '\--git a/[a-zA-Z0-9]' | sed 's/^.*--git a\///' | sed 's/ b\/.*$//' | uniq)
+      echo -e "\033[1;31mFiles and lines containing NOCOMMIT:\033[0m\n"
+
+      count=1
+      while IFS= read -r file; do
+        # Grep for NOCOMMIT in the file
+        if ! grep 'NOCOMMIT' "$file" >/dev/null 2>&1
+        then
+          continue
+        fi
+        # Display the file name and line numbers containing NOCOMMIT
+        echo -e "  $count. \033[1;33m$file\033[0m"
+        grep -n 'NOCOMMIT' "$file" | sed 's/^\([0-9]*\):/\1: /' | sed 's/  */ /g' | sed 's/^/        /' | sed 's/NOCOMMIT/\x1B[1;31m&\x1B[0m/g'
+        count=$((count+1))
+
+      done <<< "$FILES"
+
+      return 1
+    else
+      return 0
+    fi
+}
+
+function execute_pre_commit() {
+    # Execute pre-commit tools
+    # If local pre-commit config exists, execute it after global pre-commit config
+
+    HERE="$(cd "$(dirname "$0")" && pwd)"
+    ARGS=(hook-impl --config="$HERE"/.pre-commit-config.yaml --hook-type=pre-commit --hook-dir "$HERE")
+    INSTALL_PYTHON=/usr/bin/python
+
+    # Execute global pre-commit config if exists
+    if [ -f "$HERE"/.pre-commit-config.yaml ]
+    then
+        echo -e "\n\033[1;32mExecuting global pre-commit config\033[0m\n"
+
+        STATUS=0
+        if [ -x "$INSTALL_PYTHON" ]; then
+            "$INSTALL_PYTHON" -m pre_commit "${ARGS[@]}"
+            STATUS=$?
+        elif command -v pre-commit > /dev/null; then
+            pre-commit "${ARGS[@]}"
+            STATUS=$?
+        else
+            echo -e "\n\033[1;31mERROR:\033[0m pre-commit is not installed."
+            return 1
+        fi
+
+        if [ $STATUS -ne 0 ]; then
+            echo -e "\n\033[1;31mERROR:\033[0m pre-commit failed."
+            return 1
+        fi
+    else
+        echo -e "\n\033[1;33mWARNING:\033[0m No global pre-commit config found.\n"
+    fi
+
+    # Execute local pre-commit config if it exists
+    LOCAL_PRE_COMMIT_CONFIG_FILE=$(git rev-parse --show-toplevel)/.pre-commit-config.yaml
+    if [ -f "$LOCAL_PRE_COMMIT_CONFIG_FILE" ]
+    then
+        echo -e "\n\033[1;32mExecuting local pre-commit config\033[0m\n"
+        ARGS=(hook-impl --config="$LOCAL_PRE_COMMIT_CONFIG_FILE" --hook-type=pre-commit --hook-dir "$HERE")
+        if [ -x "$INSTALL_PYTHON" ]; then
+            exec "$INSTALL_PYTHON" -m pre_commit "${ARGS[@]}"
+        else
+            exec pre-commit "${ARGS[@]}"
+        fi
+        echo -e "\n"
+    fi
+    return 0
+}
+
+function main()
+{
+    # If empty commit, exit without doing anything
+    check_empty_commit
+
+    # Check for forbidden words
+    check_forbidden_words
+    if [ $? -ne 0 ]
+    then
+        exit 1
+    fi
+
+    # Run pre-commit tools
+    execute_pre_commit
+    if [ $? -ne 0 ]
+    then
+        exit 1
+    fi
+
+    return 0
+}
+
+main
