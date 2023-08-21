@@ -76,19 +76,14 @@ vim.keymap.set(
 -- Set signcolumn to auto
 vim.opt.signcolumn = "auto:1"
 
--- Unmap arrow keys
-vim.keymap.set('n', '<Up>', '<Nop>', {noremap = true})
-vim.keymap.set('n', '<Down>', '<Nop>', {noremap = true})
-vim.keymap.set('n', '<Left>', '<Nop>', {noremap = true})
-vim.keymap.set('n', '<Right>', '<Nop>', {noremap = true})
-vim.keymap.set('v', '<Up>', '<Nop>', {noremap = true})
-vim.keymap.set('v', '<Down>', '<Nop>', {noremap = true})
-vim.keymap.set('v', '<Left>', '<Nop>', {noremap = true})
-vim.keymap.set('v', '<Right>', '<Nop>', {noremap = true})
-vim.keymap.set('i', '<Up>', '<Nop>', {noremap = true})
-vim.keymap.set('i', '<Down>', '<Nop>', {noremap = true})
-vim.keymap.set('i', '<Left>', '<Nop>', {noremap = true})
-vim.keymap.set('i', '<Right>', '<Nop>', {noremap = true})
+-- Unmap arrow keys in normal, visual and insert modes
+local modes = {"n", "v", "i"}
+local arrow_keys = {"<Up>", "<Down>", "<Left>", "<Right>", "<C-Up>", "<C-Down>", "<C-Left>", "<C-Right>"}
+for _, mode in ipairs(modes) do
+    for _, key in ipairs(arrow_keys) do
+        vim.keymap.set(mode, key, "<Nop>", {noremap = true})
+    end
+end
 
 -- Set relative line numbers
 vim.opt.relativenumber = true
