@@ -32,7 +32,3 @@ repos:
             D405, D406, D407, D408, D409,
             D410, D411, D412, D414, D417,
             D419
--   repo: https://github.com/PyCQA/isort
-    rev: 5.12.0
-    hooks:
-    -   id: isort
