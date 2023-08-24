@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+# Execute pre-commit-bin in the same directory as this script
+SCRIPT_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+
+# Execute pre-commit-bin in the same directory as this script
+# with the prepare-commit-msg argument and pass all args
+. "$SCRIPT_PATH/pre-commit-bin" "prepare-commit-msg $@"
