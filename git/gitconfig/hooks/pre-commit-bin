@@ -1,0 +1,58 @@
+#!/bin/bash
+
+# Accepts hook type as first argument
+function execute_pre_commit() {
+    # Execute pre-commit tools
+    # If local pre-commit config exists, execute it after global pre-commit config
+
+    HERE="$(cd "$(dirname "$0")" && pwd)"
+    ARGS=(hook-impl --config="$HERE"/.pre-commit-config.yaml --hook-type=${1:-pre-commit} --hook-dir "$HERE" -- "${@:2}")
+
+    INSTALL_PYTHON=/usr/bin/python
+
+    # Execute global pre-commit config if exists
+    if [ -f "$HERE"/.pre-commit-config.yaml ]
+    then
+        echo -e "\n\033[1;32mExecuting global ${1:-pre-commit} config\033[0m\n"
+
+        STATUS=0
+        if [ -x "$INSTALL_PYTHON" ]; then
+            "$INSTALL_PYTHON" -m pre_commit "${ARGS[@]}"
+            STATUS=$?
+        elif command -v pre-commit > /dev/null; then
+            pre-commit "${ARGS[@]}"
+            STATUS=$?
+        else
+            echo -e "\n\033[1;31mERROR:\033[0m pre-commit is not installed."
+            return 1
+        fi
+
+        if [ $STATUS -ne 0 ]; then
+            echo -e "\n\033[1;31mERROR:\033[0m pre-commit failed."
+            return 1
+        fi
+    else
+        echo -e "\n\033[1;33mWARNING:\033[0m No global pre-commit config found.\n"
+    fi
+
+    # Execute local pre-commit config if it exists
+    LOCAL_PRE_COMMIT_CONFIG_FILE=$(git rev-parse --show-toplevel)/.pre-commit-config.yaml
+    if [ -f "$LOCAL_PRE_COMMIT_CONFIG_FILE" ]
+    then
+        echo -e "\n\033[1;32mExecuting local ${1:-pre-commit} config\033[0m\n"
+        ARGS=(hook-impl --config="$LOCAL_PRE_COMMIT_CONFIG_FILE" --hook-type=${1:-pre-commit} --hook-dir "$HERE")
+        if [ -x "$INSTALL_PYTHON" ]; then
+            exec "$INSTALL_PYTHON" -m pre_commit "${ARGS[@]}"
+        else
+            exec pre-commit "${ARGS[@]}"
+        fi
+        echo -e "\n"
+    fi
+    return 0
+}
+
+# Execute pre-commit
+execute_pre_commit ${1:-pre-commit}
+if [ $? -ne 0 ]; then
+    exit 1
+fi
