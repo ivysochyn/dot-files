@@ -5,10 +5,19 @@ repos:
     hooks:
     -   id: trailing-whitespace
 -   repo: https://github.com/crate-ci/typos
-    rev: v1.16.6
+    rev: v1.16.8
     hooks:
     -   id: typos
         stages: [pre-commit, commit-msg]
+-   repo: https://github.com/avilaton/add-msg-issue-prefix-hook
+    rev: main
+    hooks:
+    -   id: add-msg-issue-prefix
+        name: issue-prefix
+        stages: [prepare-commit-msg]
+        args:
+          -   --pattern=^\d+|\d+$
+          -   --template=[#{}]
 # C/C++
 -   repo: https://github.com/doublify/pre-commit-clang-format
     rev: 62302476d0da01515660132d76902359bed0f782
