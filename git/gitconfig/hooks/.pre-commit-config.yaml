@@ -5,12 +5,12 @@ repos:
     hooks:
     -   id: trailing-whitespace
 -   repo: https://github.com/crate-ci/typos
-    rev: v1.16.8
+    rev: v1.16.11
     hooks:
     -   id: typos
         stages: [pre-commit, commit-msg]
 -   repo: https://github.com/avilaton/add-msg-issue-prefix-hook
-    rev: main
+    rev: v0.0.9
     hooks:
     -   id: add-msg-issue-prefix
         name: issue-prefix
@@ -27,7 +27,7 @@ repos:
         -   --style=file
 # Python
 -   repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.0.285
+    rev: v0.0.287
     hooks:
     -   id: ruff
 -   repo: https://github.com/PyCQA/pydocstyle
