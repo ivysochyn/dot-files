@@ -6,3 +6,12 @@ SCRIPT_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 # Execute pre-commit-bin in the same directory as this script
 # with the prepare-commit-msg argument and pass all args
 . "$SCRIPT_PATH/pre-commit-bin" "prepare-commit-msg $@"
+
+# If 'sign-off' doesn't exist, append one and then warn the user.
+COMMIT_MESSAGE_FILE="$1"
+AUTHOR=$(git var GIT_AUTHOR_IDENT)
+if ! grep -qs "^Signed-off-by: " "$COMMIT_MESSAGE_FILE"; then
+  SIGNOFF=$(echo "$AUTHOR" | sed -n 's/^\(.*>\).*$/Signed-off-by: \1/p')
+  echo -e "\n\n$SIGNOFF" >> "$COMMIT_MESSAGE_FILE"
+  echo -e "\033[33mWARN\033[0m: Appended the following signoff to the end of the commit message:\n  $SIGNOFF\n"
+fi
