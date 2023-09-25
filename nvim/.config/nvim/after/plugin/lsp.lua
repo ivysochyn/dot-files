@@ -18,14 +18,21 @@ local lsp = require('lsp-zero').preset(
     },
 })
 
-lsp.ensure_installed({
-    'bashls',
-    'cmake',
-    'dockerls',
-    'gopls',
-    'html',
-    'jedi_language_server',
-    'pylsp',
+-- Setup mason
+local mason = require('mason').setup()
+require('mason-lspconfig').setup({
+    ensure_installed = {
+        'bashls',
+        'cmake',
+        'dockerls',
+        'gopls',
+        'html',
+        'jedi_language_server',
+        'pylsp',
+    },
+    handlers = {
+        lsp.default_setup,
+    },
 })
 
 -- Setup clangd
