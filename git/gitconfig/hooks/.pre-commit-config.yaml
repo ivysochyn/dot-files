@@ -18,6 +18,11 @@ repos:
         args:
           -   --pattern=^\d+|\d+$
           -   --template=[#{}]
+# Docker
+-   repo: https://github.com/hadolint/hadolint
+    rev: v2.12.0
+    hooks:
+    -   id: hadolint
 # C/C++
 -   repo: https://github.com/doublify/pre-commit-clang-format
     rev: 62302476d0da01515660132d76902359bed0f782
