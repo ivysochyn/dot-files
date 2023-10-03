@@ -5,7 +5,7 @@ repos:
     hooks:
     -   id: trailing-whitespace
 -   repo: https://github.com/crate-ci/typos
-    rev: v1.16.11
+    rev: v1.16.17
     hooks:
     -   id: typos
         entry: bash -c 'typos --config=$HOME/.config/typos.toml'
@@ -20,7 +20,7 @@ repos:
           -   --template=[#{}]
 # Docker
 -   repo: https://github.com/hadolint/hadolint
-    rev: v2.12.0
+    rev: v2.12.1-beta
     hooks:
     -   id: hadolint
 # C/C++
@@ -32,7 +32,7 @@ repos:
         -   --style=file
 # Python
 -   repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.0.287
+    rev: v0.0.292
     hooks:
     -   id: ruff
 -   repo: https://github.com/PyCQA/pydocstyle
