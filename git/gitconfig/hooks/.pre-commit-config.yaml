@@ -8,7 +8,7 @@ repos:
     rev: v1.16.11
     hooks:
     -   id: typos
-        stages: [pre-commit, commit-msg]
+        entry: bash -c 'typos --config=$HOME/.config/typos.toml'
 -   repo: https://github.com/avilaton/add-msg-issue-prefix-hook
     rev: v0.0.9
     hooks:
