@@ -47,4 +47,7 @@ return require('packer').startup(function(use)
 
     -- Nvim Linter
     use 'mfussenegger/nvim-lint'
+
+    -- Copilot
+    use 'github/copilot.vim'
 end)
