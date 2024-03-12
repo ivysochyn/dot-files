@@ -88,3 +88,6 @@ end
 
 -- Set relative line numbers
 vim.opt.relativenumber = true
+
+-- Toggle spelling check on <leader>g
+vim.api.nvim_set_keymap('n', '<leader>g', '<Cmd>setlocal spell!<CR><Cmd>echo "Toggled spell check"<CR>', {noremap = true, silent = true})

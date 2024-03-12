@@ -2,7 +2,6 @@ require "packer.packer"
 require "user.autopairs"
 require "user.config"
 require "user.copilot"
-require "user.grammarous"
 
 local notify = vim.notify
 vim.notify = function(msg, ...)
