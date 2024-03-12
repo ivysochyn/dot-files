@@ -26,9 +26,10 @@ local toggle_expandtab = function()
 end
 vim.keymap.set('n', '<S-Tab>', toggle_expandtab, {noremap = true})
 
--- Display tabs as <---
-vim.opt.list = true
-vim.opt.listchars = "tab:<-"
+-- If the file has line starting with tab, set expandtab to false
+vim.api.nvim_exec([[
+  autocmd BufRead,BufNewFile * if search('^\t', 'nw') != 0 | set noexpandtab | endif
+]], false)
 
 -- Macro to remove trailing whitespace mapped to <leader><F4>
 vim.keymap.set('n', '<leader><F4>', ':%s/\\s\\+$//e<CR>', {noremap = true})
