@@ -77,4 +77,7 @@ return require("packer").startup(function(use)
 
 	-- Self hosted LLM
 	use("ivysochyn/hfcc.nvim")
+
+	-- Markdown TOC
+	use("mzlogin/vim-markdown-toc")
 end)
