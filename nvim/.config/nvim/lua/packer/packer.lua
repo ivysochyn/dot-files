@@ -55,7 +55,7 @@ return require("packer").startup(function(use)
 	use("github/copilot.vim")
 
 	-- Color scheme
-	use("vim-scripts/peaksea")
+	use("ivysochyn/peaksea")
 
 	-- Trailing Whitespace
 	use({
