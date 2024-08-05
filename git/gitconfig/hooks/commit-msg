@@ -6,3 +6,18 @@ SCRIPT_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 # Execute pre-commit-bin in the same directory as this script
 # with the commit-msg argument and pass all args
 . "$SCRIPT_PATH/pre-commit-bin" "commit-msg $@"
+COMMIT_MESSAGE_FILE="$1"
+
+# If typos binary is installed, run it but don't fail the commit
+if command -v typos > /dev/null; then
+  TYPOS_OUT=$(typos --color "always" "$COMMIT_MESSAGE_FILE")
+  if [ -n "$TYPOS_OUT" ]; then
+    COMMIT_NAME=$(head -n 1 "$COMMIT_MESSAGE_FILE")
+    echo -e "\033[33mWARN\033[0m: Typos found in commit message."
+    echo "      Review them before pushing."
+    echo -e "      Commit: \033[33m$COMMIT_NAME\033[0m"
+    echo -e "\033[31m=================> TYPOS <=================\033[0m"
+    echo -e "$TYPOS_OUT"
+    echo -e "\033[31m===========================================\033[0m"
+  fi
+fi
