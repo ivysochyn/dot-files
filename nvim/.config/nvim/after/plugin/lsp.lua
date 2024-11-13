@@ -25,7 +25,6 @@ require('mason-lspconfig').setup({
         'bashls',
         'cmake',
         'dockerls',
-        'gopls',
         'html',
         'jedi_language_server',
         'pylsp',
