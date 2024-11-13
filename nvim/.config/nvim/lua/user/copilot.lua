@@ -12,3 +12,7 @@ vim.keymap.set({'i', 'n'}, '<C-\\>', '<Cmd>lua vim.g.copilot_enabled = not vim.g
 
 -- Map <C-]> to <Plug>(copilot-next) and <C-[> to <Plug>(copilot-prev)
 vim.api.nvim_set_keymap('i', '<C-]>', '<Plug>(copilot-next)', { noremap = true, silent = false })
+
+require("CopilotChat").setup {
+    debug = true,
+}

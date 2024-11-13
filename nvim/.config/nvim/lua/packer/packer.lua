@@ -54,6 +54,17 @@ return require("packer").startup(function(use)
 	-- Copilot
 	use("github/copilot.vim")
 
+	-- Copilot Chat for Neovim
+	use({
+		"CopilotC-Nvim/CopilotChat.nvim",
+		branch = "canary",
+		requires = {
+			{ "nvim-lua/plenary.nvim" },
+			{ "github/copilot.vim" },
+		},
+		build = "make tiktoken",
+	})
+
 	-- Color scheme
 	use("ivysochyn/peaksea")
 
@@ -80,4 +91,5 @@ return require("packer").startup(function(use)
 
 	-- Markdown TOC
 	use("mzlogin/vim-markdown-toc")
+
 end)
