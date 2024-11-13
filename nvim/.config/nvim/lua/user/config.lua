@@ -95,3 +95,9 @@ vim.api.nvim_set_keymap('n', '<leader>g', '<Cmd>setlocal spell!<CR><Cmd>echo "To
 -- Set ignorecase and smartcase
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
+
+-- Map command :GenTocGFM to :TOCGFM
+vim.cmd('command! -nargs=0 TOCGFM GenTocGFM')
+vim.cmd('command! -nargs=0 TOCRedCarpet GenTocRedCarpet')
+vim.cmd('command! -nargs=0 TOCGitLab GenTocGitLab')
+vim.cmd('command! -nargs=0 TOCMarked GenTocMarked')
