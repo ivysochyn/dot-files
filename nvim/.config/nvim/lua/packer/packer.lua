@@ -57,7 +57,7 @@ return require("packer").startup(function(use)
 	-- Copilot Chat for Neovim
 	use({
 		"CopilotC-Nvim/CopilotChat.nvim",
-		branch = "canary",
+		branch = "main",
 		requires = {
 			{ "nvim-lua/plenary.nvim" },
 			{ "github/copilot.vim" },
