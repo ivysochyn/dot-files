@@ -20,22 +20,52 @@ local lsp = require('lsp-zero').preset(
 
 -- Setup mason
 local mason = require('mason').setup()
-require('mason-lspconfig').setup({
+local mason_lspconfig = require('mason-lspconfig')
+
+mason_lspconfig.setup({
     ensure_installed = {
         'bashls',
         'cmake',
         'dockerls',
         'html',
-        'jedi_language_server',
         'pylsp',
     },
-    handlers = {
-        lsp.default_setup,
-    },
+})
+
+lspconfig = require('lspconfig')
+local opts = {
+    on_attach = lsp.on_attach,
+    capabilities = lsp.capabilities,
+}
+
+mason_lspconfig.setup_handlers({
+    function(server_name) -- Default handler (optional)
+        lspconfig[server_name].setup {
+            on_attach = opts.on_attach,
+            capabilities = opts.capabilities,
+        }
+    end,
+
+    pylsp = function()
+        lspconfig.pylsp.setup {
+            on_attach = opts.on_attach,
+            capabilities = opts.capabilities,
+            settings = {
+                pylsp = {
+                    configurationSources = {'flake8'},
+                    plugins = {
+                        flake8 = {enabled = true},
+                    },
+                },
+            },
+        }
+    end,
 })
 
 -- Setup clangd
 lsp.setup_servers({'clangd'})
+
+-- Setup pylsp
 
 -- Setup code completion
 local cmp = require('cmp')
