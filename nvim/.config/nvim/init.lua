@@ -11,3 +11,5 @@ vim.notify = function(msg, ...)
 
     notify(msg, ...)
 end
+
+vim.cmd [[highlight link @text.todo Todo]]
