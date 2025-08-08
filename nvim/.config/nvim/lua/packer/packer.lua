@@ -92,4 +92,6 @@ return require("packer").startup(function(use)
 	-- Markdown TOC
 	use("mzlogin/vim-markdown-toc")
 
+	-- Git blame
+	use("f-person/git-blame.nvim")
 end)

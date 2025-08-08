@@ -89,8 +89,12 @@ end
 -- Set relative line numbers
 vim.opt.relativenumber = true
 
--- Toggle spelling check on <leader>g
-vim.api.nvim_set_keymap('n', '<leader>g', '<Cmd>setlocal spell!<CR><Cmd>echo "Toggled spell check"<CR>', {noremap = true, silent = true})
+require('gitblame').setup {
+    enabled = false,
+}
+
+-- Toggle spelling check and git blame on <leader>g
+vim.api.nvim_set_keymap('n', '<leader>g', '<Cmd>setlocal spell!<CR><Cmd>GitBlameToggle<CR><Cmd>echo "Toggled spell check and blame"<CR>', {noremap = true, silent = true})
 
 -- Set ignorecase and smartcase
 vim.opt.ignorecase = true
